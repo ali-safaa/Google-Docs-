@@ -1,15 +1,19 @@
-import { useRouter } from 'next/dist/client/router'
-import React from 'react'
+import { useRouter } from 'next/dist/client/router';
+import React from 'react';
 
-function DocumentRow(props) {
-    const router = useRouter();
-    return (
-        <div>
-            <div className="flex items-center my-3">
-            <h3 onClick={() => router.push(`/doc/${props.id}`)} className="text-gray-500 font-bold ml-2 cursor-pointer">{props.fileName}</h3>
-            </div>
-        </div>
-    )
+function DocumentRow({ id, filename, date }) {
+  const router = useRouter();
+  return (
+    <div
+      onClick={() => router.push(`/doc/${id}`)}
+      className="flex items-center justify-between mx-3 hover:bg-gray-300 py-1 px-3 rounded-md cursor-pointer"
+    >
+      <h3 className="text-gray-600 flex justify-center items-center">
+        {filename}
+      </h3>
+      <small>{date.toDate().toLocaleDateString()}</small>
+    </div>
+  );
 }
 
-export default DocumentRow
+export default DocumentRow;
