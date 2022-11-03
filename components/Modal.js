@@ -1,15 +1,20 @@
 import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 import { db } from '../firebase';
-import firebase from 'firebase';
+import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+
 function Modal({ closeModal }) {
   const [input, setInput] = useState('');
   const { data: session } = useSession();
-  const handleNew = async (e) => {
+
+  const addDocument = async (e) => {
     e.preventDefault();
-    db.collection('userDocs').doc(session.user.name).collection('docs').add({
+    const docRef = collection(db, 'usersDocs');
+
+    await setDoc(doc(docRef, session.user.name), {
       filename: input,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      name: session.user.name,
+      date: serverTimestamp(),
     });
     setInput('');
     closeModal(false);
@@ -44,7 +49,7 @@ function Modal({ closeModal }) {
             cancel
           </button>
           <button
-            onClick={handleNew}
+            onClick={addDocument}
             className="bg-blue-500 font-bold hover:bg-black duration-500 text-white px-8 rounded-md"
           >
             continue

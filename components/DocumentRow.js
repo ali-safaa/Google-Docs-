@@ -1,7 +1,6 @@
 import { useRouter } from 'next/dist/client/router';
-import React from 'react';
 
-function DocumentRow({ id, filename, date }) {
+function DocumentRow({ data }) {
   const router = useRouter();
   return (
     <div
@@ -9,9 +8,9 @@ function DocumentRow({ id, filename, date }) {
       className="flex items-center justify-between mx-3 hover:bg-gray-300 py-1 px-3 rounded-md cursor-pointer"
     >
       <h3 className="text-gray-600 flex justify-center items-center">
-        {filename}
+        {data.filename}
       </h3>
-      <small>{date.toDate().toLocaleDateString()}</small>
+      <small>{data.name}</small>
     </div>
   );
 }

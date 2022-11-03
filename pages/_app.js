@@ -6,12 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <div>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet"
-        />
-      </Head>
+      <Head></Head>
       <SessionProvider session={session}>
         <Component {...pageProps} />
       </SessionProvider>

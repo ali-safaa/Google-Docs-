@@ -1,5 +1,4 @@
 import { useRouter } from 'next/dist/client/router';
-import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
 import TextEditor from '../../components/TextEditor';
@@ -23,10 +22,6 @@ function Doc() {
     <div>
       <Head>
         <title>doc page</title>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        />
       </Head>
       <header className="flex items-center justify-between">
         <img

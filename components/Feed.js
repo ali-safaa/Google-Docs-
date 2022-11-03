@@ -1,21 +1,25 @@
-// import { collection, onSnapshot } from '@firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import DocumentRow from './DocumentRow';
-import { useCollectionOnce } from 'react-firebase-hooks/firestore';
 import Modal from './Modal';
 
 function Feed() {
   const [openModal, setOpenModal] = useState(false);
   const { data: session } = useSession();
-  const [snapshot] = useCollectionOnce(
-    db
-      .collection('userDocs')
-      .doc(session?.user?.name)
-      .collection('docs')
-      .orderBy('timestamp', 'desc')
-  );
+  const [data, setData] = useState([]);
+  const getData = async () => {
+    const docRef = doc(db, 'usersDocs', 'Shadow Mary');
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setData(docSnap.data());
+    } else {
+      console.log('No such document!');
+    }
+  };
+  getData();
   return (
     <div>
       <section className="bg-gray-100 py-2 mt-3">
@@ -29,7 +33,6 @@ function Feed() {
         ) : (
           <>
             <div
-              disbled={!session}
               onClick={() => setOpenModal(true)}
               className="bg-white cursor-pointer w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] m-auto text-center flex items-center justify-center"
             >
@@ -56,14 +59,7 @@ function Feed() {
             </div>
           </section>
 
-          {snapshot?.docs?.map((doc) => (
-            <DocumentRow
-              key={doc.id}
-              id={doc.id}
-              filename={doc.data().filename}
-              date={doc.data().timestamp}
-            />
-          ))}
+          <DocumentRow data={data} />
         </>
       )}
     </div>

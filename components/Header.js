@@ -1,6 +1,5 @@
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/dist/client/router';
-import React from 'react';
 
 function Header() {
   const { data: session } = useSession();
